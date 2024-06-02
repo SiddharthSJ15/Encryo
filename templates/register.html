@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="bg-primary text-white" id="banner">
+    <div class="bubbles d-none d-md-block">
+        
+        <!-- 				bubbles -->
+        <div class="bubble bubble-1 rotate-bubble bg-warning"></div>
+        <div class="bubble bubble-2 bubble-bottom-right bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-3 bubble-top-right bg-warning rotate-bubble"></div>
+        <div class="bubble bubble-4 bubble-top-left bg-info rotate-bubble"></div>
+        <div class="bubble bubble-5 bg-info rotate-bubble"></div>
+        <div class="bubble bubble-6 bubble-bottom-right bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-7 bubble-top-right bg-success rotate-bubble"></div>
+        <div class="bubble bubble-8 bubble-top-left bg-success rotate-bubble"></div>
+        <div class="bubble bubble-9 bg-warning rotate-bubble"></div>
+        <div class="bubble bubble-10 bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-11 bubble-bottom-right bg-info rotate-bubble"></div>
+        <div class="bubble bubble-12 bubble-top-right bg-success rotate-bubble"></div>
+        <div class="bubble bubble-13 bubble-top-left bg-success rotate-bubble"></div>
+        <!--         circles -->
+        <div class="circle circle-1 bg-light rotate-circle"></div>
+        <div class="circle circle-2 bg-success rotate-circle"></div>
+        <div class="circle circle-3 bg-danger rotate-circle"></div>
+        <div class="circle circle-4 bg-info rotate-circle"></div>
+        <div class="circle circle-5 bg-success rotate-circle"></div>
+        <div class="circle circle-6 bg-info rotate-circle"></div>
+        <div class="circle circle-7 bg-warning rotate-circle"></div>
+        <div class="circle circle-8 bg-white rotate-circle"></div>
+        <div class="circle circle-9 bg-warning rotate-circle"></div>
+        <div class="circle circle-10 bg-danger rotate-circle"></div>
+
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 col-md-4 offset-md-4">
+						<div class="register-form">
+							<div class="mb-5">
+								<h1 class="text-warning">Register</h1>
+								<p class="lead">Create an account to start Ciphering.</p>
+							</div>
+							<form action="" method="post"> 
+								{% csrf_token %} 
+								<div class="form-group">
+									<label for="txtFname">First name</label>
+									<input type="text" class="form-control" id="txtFname" name="txtFname" placeholder="" aria-label="fname" aria-describedby="basic-addon1">
+								</div>
+								<div class="form-group">
+									<label for="txtSname">Sur name</label>
+									<input type="text" class="form-control" id="txtSname" name="txtSname" placeholder="" aria-label="sname" aria-describedby="basic-addon1">
+								</div>
+								<div class="form-group">
+									<label for="txtMob">Mobile</label>
+									<input type="text" class="form-control" id="txtMob" name="txtMobs" placeholder="" aria-label="mob" aria-describedby="basic-addon1">
+								</div>
+								<div class="form-group">
+									<label for="txtEmail">Email address</label>
+									<input type="email" class="form-control" id="txtEmail" name="txtEmail" aria-describedby="emailHelp" placeholder="Enter email">
+									<small id="emailHelp" class="form-text text-info"><b>We'll never share your email with anyone else.</b></small>
+								</div>
+								<div class="form-group">
+									<label for="txtPswd">Password</label>
+									<input type="password" class="form-control" id="txtPswd" name="txtPswd" placeholder="Password">
+								</div>
+								<div class="form-group">
+									<label for="pswd1">Password Confirmation</label>
+									<input type="password" class="form-control" id="pswd1" placeholder="Password">
+								</div>
+								{% comment %} <div class="custom-control custom-checkbox my-4">
+									<input type="checkbox" class="custom-control-input" id="customCheck2">
+									<label class="custom-control-label" for="customCheck2">Remember me</label>
+								</div> {% endcomment %}
+								<button type="submit" class="btn btn-block btn-success" onclick="matchPassword()">Register</button>
+								</form>
+
+								<p class="small my-4 text-center">Already have an account? <a href="loginpg">Log in</a>.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script> 
+	var msg = "{{msg}}"
+	if (msg != "")
+		alert(msg)
+</script>
+<script>
+	function matchPassword() {  
+	  var pw1 = document.getElementById("pswd").value;  
+	  var pw2 = document.getElementById("pswd1").value;  
+	  if(pw1 != pw2)  
+	  {   
+		alert("Passwords did not match");  
+	  } 
+	}  
+	</script> 
+{% endblock %}

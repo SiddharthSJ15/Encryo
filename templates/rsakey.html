@@ -1,0 +1,134 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+<div class="page-hero bg-secondary text-white" id="banner">
+    <div class="bubbles d-none d-md-block">
+            
+            <!-- bubbles -->
+            <div class="bubble bubble-1 rotate-bubble bg-warning"></div>
+            <div class="bubble bubble-2 bubble-bottom-right bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-3 bubble-top-right bg-warning rotate-bubble"></div>
+            <div class="bubble bubble-4 bubble-top-left bg-info rotate-bubble"></div>
+            <div class="bubble bubble-5 bg-info rotate-bubble"></div>
+            <div class="bubble bubble-6 bubble-bottom-right bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-7 bubble-top-right bg-success rotate-bubble"></div>
+            <div class="bubble bubble-8 bubble-top-left bg-success rotate-bubble"></div>
+            <div class="bubble bubble-9 bg-warning rotate-bubble"></div>
+            <div class="bubble bubble-10 bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-11 bubble-bottom-right bg-info rotate-bubble"></div>
+            <div class="bubble bubble-12 bubble-top-right bg-success rotate-bubble"></div>
+            <div class="bubble bubble-13 bubble-top-left bg-success rotate-bubble"></div>
+            <!-- circles -->
+            <div class="circle circle-1 bg-light rotate-circle"></div>
+            <div class="circle circle-2 bg-success rotate-circle"></div>
+            <div class="circle circle-3 bg-danger rotate-circle"></div>
+            <div class="circle circle-4 bg-info rotate-circle"></div>
+            <div class="circle circle-5 bg-success rotate-circle"></div>
+            <div class="circle circle-6 bg-info rotate-circle"></div>
+            <div class="circle circle-7 bg-warning rotate-circle"></div>
+            <div class="circle circle-8 bg-white rotate-circle"></div>
+            <div class="circle circle-9 bg-warning rotate-circle"></div>
+            <div class="circle circle-10 bg-danger rotate-circle"></div>
+
+            
+            <h1 class="text-center text-warning">RSA KEY GENERATION</h1>
+        <div class="container-fluid py-0 pt-5 offset-md-2">
+            <form method="get" action="{% url 'generate_keys' %}">
+                <div class="dropdown">
+                    <label for="key_size" class="text-white">Select Key Size: &nbsp; </label>
+                    <select name="key_size" class="btn btn-danger dropdown-toggle" id="key_size">
+                        <option value="512">512 bits</option>
+                        <option value="1024">1024 bits</option>
+                        <option value="2048">2048 bits</option>
+                        <option value="3072">3072 bits</option>
+                        <option value="4096">4096 bits</option>
+                    </select>                
+                    <button type="submit" class="btn btn-success">Generate Keys</button>
+                </div>
+            </form>      
+
+            <h2 class="text-white mt-4">Generated Keys</h2>
+            <div class="section">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="component">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Private Key:</h3>
+                                            </div>
+                                            <div>
+                                                <button onclick="copyToClipboard('private_key')" title="Copy Private Key" class="btn btn-outline-info">Copy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <pre id="private_key">{{ private_key }}</pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="component">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Public Key:</h3>
+                                            </div>
+                                            <div>
+                                                <button onclick="copyToClipboard('public_key')" title="Copy Public Key" class="btn btn-outline-info">Copy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <pre id="public_key">{{ public_key }}</pre>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container">
+                            <div class="row justify-content-end">
+                                <div class="col-6 col-md-12">
+                                    <p class="text-warning">
+                                        <br>-> Rest assured, we prioritize your security by refraining from storing your private key on our servers. Your public key is securely retained solely for the purpose of data encryption.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var msg = "{{msg}}"
+        if (msg != "")
+            alert(msg) 
+</script>
+
+    <script>
+        function copyToClipboard(elementId) {
+            /* Get the text content of the specified element */
+            var text = document.getElementById(elementId);
+
+            /* Create a temporary input element to copy the text */
+            var tempInput = document.createElement("textarea");
+            tempInput.value = text.textContent;
+            document.body.appendChild(tempInput);
+
+            /* Select and copy the text in the input element */
+            tempInput.select();
+            document.execCommand("copy");
+
+            /* Remove the temporary input element */
+            document.body.removeChild(tempInput);
+
+            alert('Copied to clipboard!');
+        }
+    </script>
+{% endblock %}

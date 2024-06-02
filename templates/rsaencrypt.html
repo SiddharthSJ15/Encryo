@@ -1,0 +1,144 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-hero bg-secondary text-white" id="banner">
+    <div class="bubbles d-none d-md-block">
+            
+            <!-- 				bubbles -->
+            <div class="bubble bubble-1 rotate-bubble bg-warning"></div>
+            <div class="bubble bubble-2 bubble-bottom-right bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-3 bubble-top-right bg-warning rotate-bubble"></div>
+            <div class="bubble bubble-4 bubble-top-left bg-info rotate-bubble"></div>
+            <div class="bubble bubble-5 bg-info rotate-bubble"></div>
+            <div class="bubble bubble-6 bubble-bottom-right bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-7 bubble-top-right bg-success rotate-bubble"></div>
+            <div class="bubble bubble-8 bubble-top-left bg-success rotate-bubble"></div>
+            <div class="bubble bubble-9 bg-warning rotate-bubble"></div>
+            <div class="bubble bubble-10 bg-danger rotate-bubble"></div>
+            <div class="bubble bubble-11 bubble-bottom-right bg-info rotate-bubble"></div>
+            <div class="bubble bubble-12 bubble-top-right bg-success rotate-bubble"></div>
+            <div class="bubble bubble-13 bubble-top-left bg-success rotate-bubble"></div>
+            <!--         circles -->
+            <div class="circle circle-1 bg-light rotate-circle"></div>
+            <div class="circle circle-2 bg-success rotate-circle"></div>
+            <div class="circle circle-3 bg-danger rotate-circle"></div>
+            <div class="circle circle-4 bg-info rotate-circle"></div>
+            <div class="circle circle-5 bg-success rotate-circle"></div>
+            <div class="circle circle-6 bg-info rotate-circle"></div>
+            <div class="circle circle-7 bg-warning rotate-circle"></div>
+            <div class="circle circle-8 bg-white rotate-circle"></div>
+            <div class="circle circle-9 bg-warning rotate-circle"></div>
+            <div class="circle circle-10 bg-danger rotate-circle"></div>
+
+        <h1 class="text-center text-warning">RSA ENCRYPTION</h1>
+        <div class="container-fluid py-0 offset-md-2">
+            <div class="section">
+                <div class="row">
+                    <div class="col-md-5"> 
+                        <form method="post" action="{% url 'rsaencrypt' %}">
+                        {% csrf_token %}
+                        <h3 class="text-white">Enter Recepient Phone:</h3>
+                        <div class="form-group ">
+                            <div class="col-lg-7 col-md-5">
+                                <input type="text" class="form-control" id="mobs" name="mobs" placeholder="Recepient Phone" required>
+                            </div>                                
+                            <div class="col-md-5 pt-2">
+                                <button type="submit" class="btn btn-success" value="Encrypt">Get Public Key</button>
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="component">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-sm">
+                                                <h3>Public Key:</h3>
+                                            </div>
+                                            <div>
+                                                <button onclick="copyToClipboard('public_key')" title="Copy Private Key" class="btn btn-outline-info">Copy</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% for d in data %}
+                                    <pre id="public_key">{{d.2}}</pre>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>                    
+                    
+                </div>
+            </div>
+        
+
+                <div class="col-md-5 pt-5"> 
+                <form method="post" action="{% url 'rsaencrypt' %}">
+                {% csrf_token %}
+                <h3 class="text-white">Enter text to Encrypt:</h3>
+                    <div class="form-group ">
+                        <div class="section">
+                            <div class="row">
+                                <div class="col-lg-7 col-md-5">
+                                    <input type="text" class="form-control" id="message" name="message" placeholder="Enter message">
+                                </div>
+                                <div class="col-lg-7 col-md-5 pt-5">
+                                    <textarea type="text" class="form-control" id="public_key" name="public_key" placeholder="Paste The Public Key Here"></textarea>
+                                </div>
+                                <div class="col-md-5">
+                                    <button type="submit" class="btn btn-success" value="Encrypt">Encrypt</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </div>
+                        
+                {% if encrypted_message %} 
+                <div class="col-md-5"> 
+                    <div class="form-group pt-5">
+                    <h3 class="text-white">Encrypted message:</h3>
+                        <div class="card ">
+                            <div class="card-body text-dark" >
+                                <p id="ciphertext"> {{ encrypted_message }}</p>
+                                    <button id="copyButton"  class="btn btn-secondary" onclick="copyToClipboard('ciphertext')">Copy</button>                            
+                            </div>
+                        </div>    
+                    </div>
+                </div>    
+                {% endif %}
+        </div>
+    </div>
+</div>
+<script>
+    function copyToClipboard(elementId) {
+        /* Get the text content of the specified element */
+        var text = document.getElementById(elementId);
+
+        /* Create a temporary input element to copy the text */
+        var tempInput = document.createElement("textarea");
+        tempInput.value = text.textContent;
+        document.body.appendChild(tempInput);
+
+        /* Select and copy the text in the input element */
+        tempInput.select();
+        document.execCommand("copy");
+
+        /* Remove the temporary input element */
+        document.body.removeChild(tempInput);
+
+        alert('Copied to clipboard!');
+    }
+</script>
+
+<script>
+    var msg = "{{msg}}";
+    if (msg !== "") {
+        alert(msg);
+    }
+</script>
+{% endblock %}

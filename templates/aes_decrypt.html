@@ -1,0 +1,135 @@
+{% extends 'baseuser.html' %}
+{% load static %}
+{% block content %}
+
+<div class="page-hero bg-secondary text-white" id="banner">
+    <div class="bubbles d-none d-md-block">
+
+        <!-- 				bubbles -->
+        <div class="bubble bubble-1 rotate-bubble bg-warning"></div>
+        <div class="bubble bubble-2 bubble-bottom-right bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-3 bubble-top-right bg-warning rotate-bubble"></div>
+        <div class="bubble bubble-4 bubble-top-left bg-info rotate-bubble"></div>
+        <div class="bubble bubble-5 bg-info rotate-bubble"></div>
+        <div class="bubble bubble-6 bubble-bottom-right bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-7 bubble-top-right bg-success rotate-bubble"></div>
+        <div class="bubble bubble-8 bubble-top-left bg-success rotate-bubble"></div>
+        <div class="bubble bubble-9 bg-warning rotate-bubble"></div>
+        <div class="bubble bubble-10 bg-danger rotate-bubble"></div>
+        <div class="bubble bubble-11 bubble-bottom-right bg-info rotate-bubble"></div>
+        <div class="bubble bubble-12 bubble-top-right bg-success rotate-bubble"></div>
+        <div class="bubble bubble-13 bubble-top-left bg-success rotate-bubble"></div>
+        <!--         circles -->
+        <div class="circle circle-1 bg-light rotate-circle"></div>
+        <div class="circle circle-2 bg-success rotate-circle"></div>
+        <div class="circle circle-3 bg-danger rotate-circle"></div>
+        <div class="circle circle-4 bg-info rotate-circle"></div>
+        <div class="circle circle-5 bg-success rotate-circle"></div>
+        <div class="circle circle-6 bg-info rotate-circle"></div>
+        <div class="circle circle-7 bg-warning rotate-circle"></div>
+        <div class="circle circle-8 bg-white rotate-circle"></div>
+        <div class="circle circle-9 bg-warning rotate-circle"></div>
+        <div class="circle circle-10 bg-danger rotate-circle"></div>
+    
+        <div class="container-fluid py-0 offset-md-2">
+            <div class="row">
+                <div class=" col-md-5">                        
+                    <form method="post" action="{% url 'aesdecrypt' %}">
+                    {% csrf_token %}
+                    <h2 class="text-warning">AES ONLINE DECRYPTION</h2>
+                    <h4 class="text-white">Enter Decrypted text</h4>
+                    <div>
+                        <textarea id="dinputString" name="textToDecrypt" class="form-control input-lg"></textarea>
+                    </div>
+                    <div class="form-group pt-4">
+                        <h4 class="text-white">Input Text Format:</h4>
+                        <div class="custom-control custom-radio my-2">
+                            <input type="radio" id="customRadio1" name="encryptOutputFormat" class="custom-control-input" value="Base64" checked>
+                            <label class="custom-control-label" for="customRadio1">Base64</label>
+                        </div>
+                        <div class="custom-control custom-radio my-2">
+                            <input type="radio" id="customRadio2" name="encryptOutputFormat" class="custom-control-input" value="Hex">
+                            <label class="custom-control-label" for="customRadio2">Hex</label>
+                        </div>
+                    </div>
+                    <div class="pt-3">
+                        <h4 class="text-white">Select Decryption Cipher Mode</h4>
+                        <select class="form-control col-5" name="dmode" required>
+                            <option value="ECB" selected>ECB</option>
+                            <option value="CBC">CBC</option>
+                        </select>
+                    </div>
+                    <div class="pt-3">
+                        <h4 for="dkeysize" class="text-white">Key Size in Bits</h4>
+                        <select class="form-control col-5" name="dkeysize" required>
+                            <option value="128" selected>128</option>
+                            <option value="192">192</option>
+                            <option value="256">256</option>
+                        </select>
+                    </div>
+                    <div class="form-group pt-3">
+                        <h4 class="text-white" for="dsecretkey">Enter Secret Key:</h4>
+                        <input class="form-control col-10" type="text" id="dsecretkey" name="dsecretkey" placeholder="Enter secret key" required>
+                    </div>                    
+                    <div class="form-group">
+                        <button class="btn btn-primary" name="decrypt" value="decrypt" type="submit">Decrypt</button>
+                    </div>
+                    </form> 
+                </div>
+                <div class="col-md-4 mt-2 ">
+                    <div class="component">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="container">
+                                    <div class="row">                     
+                                        <div class="col-sm">
+                                            <h3 for="doutputString" class="text-dark">AES Decrypted Output:</h3>                  
+                                        </div>
+                                        <div>
+                                            <button onclick="copyToClipboard('decrypted_output')" title="Copy Key" class="btn btn-outline-info mx-3">Copy</button>
+                                        </div>
+                                    </div>
+                                    <div>                                       
+                                        <textarea id="decrypted_output" class="form-control" placeholder="Result goes here" readonly>{{ decrypted_output }}</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+<script>
+    var msg = "{{msg}}";
+    if (msg !== "") {
+        alert(msg);
+    }
+</script>
+
+<script>
+    function copyToClipboard(elementId) {
+        /* Get the text content of the specified element */
+        var text = document.getElementById(elementId);
+
+        /* Create a temporary input element to copy the text */
+        var tempInput = document.createElement("textarea");
+        tempInput.value = text.textContent;
+        document.body.appendChild(tempInput);
+
+        /* Select and copy the text in the input element */
+        tempInput.select();
+        document.execCommand("copy");
+
+        /* Remove the temporary input element */
+        document.body.removeChild(tempInput);
+
+        alert('Copied to clipboard!');
+    }
+</script>
+
+{% endblock %}
